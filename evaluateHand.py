@@ -128,11 +128,12 @@ def whoWon(lst):
 
     return rtnHash
 
+
 def createRandomHands():
     lst = []
     tempL = []
 
-    for x in range(0,1000000):
+    for x in range(0,10):
         for x in range(0,7):
             tempVal = r.randrange(1,53)
             while tempVal in tempL:
@@ -143,8 +144,8 @@ def createRandomHands():
 
     return lst
 
-def get_key(val):
-    for key, value in handHash.items():
+def get_key(val, hash):
+    for key, value in hash.items():
         if val == value:
             return key
 
@@ -156,6 +157,7 @@ def readHand(lst):
         str += f'{i[0]}{i[1]} '
 
     return str.strip()
+
 #print(evaluateHand(['12','11','37','3','28','45','41']))
 handLst = createRandomHands()
 
@@ -169,11 +171,10 @@ def getAvg(lst):
     return s/i
 
 def getRanking(x):
-    return get_key(deckHash[x][0])
+    return get_key(deckHash[x][0], handHash)
 sum = 0
 
 for x in handLst:
-
     test = f'{readHand(sorted(x,key=getRanking,reverse=True))}: {evaluateHand(x)}'
     hand = evaluateHand(x)
     sum += getAvg(x)
