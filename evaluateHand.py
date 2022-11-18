@@ -1,4 +1,5 @@
 import random as r
+from getMainData import *
 
 handHash = {13:"A",12:"K",11:"Q",10:"J",9:"T",8:"9",7:"8",6:"7",5:"6",4:"5",3:"4",2:"3",1:"2"}
 handRankingHash = {8:"straight flush",7:"four of a kind",6:'full house',5:'flush',4:'straight',3:'three of a kind',2:'two pair',1:'one pair', 0:'high card'}
@@ -32,20 +33,32 @@ def isStraightFlush(lst):
     c = 1
     i = 0
     check = int(lst[i])
+    if len(lst) > 5:
+        for x in lst:
+            if i < 6:
+                if check - int(lst[i+1]) == 1:
+                    c += 1
+                else:
+                    c = 1
 
-    for x in lst:
-        if i < 6:
-            if check - int(lst[i+1]) == 1:
-                c += 1
-            else:
-                c = 1
+                if c == 5:
+                    return True
 
-            if c == 5:
-                return True
+                check = int(lst[i+1])
+            i += 1
+    else:
+        for x in lst:
+            if i < 4:
+                if check - int(lst[i+1]) == 1:
+                    c += 1
+                else:
+                    c = 1
 
-            check = int(lst[i+1])
-        i += 1
+                if c == 5:
+                    return True
 
+                check = int(lst[i+1])
+            i += 1
 
     return False
 
@@ -148,10 +161,16 @@ def bestFive(lst, rank):
         return [rtnLst,rank]
     elif rank == 'straight flush':
         leng = len(lst)
+        #print('triggered')
+        #print(lst)
+        #print(readHand(sortedLst))
         for x in range(0,leng):
-            if x < leng-5:
-                if sortedLst[x] - sortedLst[x+1] == 1 and sortedLst[x+1] - sortedLst[x+2] == 1:
-                    rtnLst = sortedLst[x:x+5]
+            if x < leng:
+                #print(x)
+                if lst[x] - lst[x+1] == 1 and lst[x+1] - lst[x+2] == 1:
+                    rtnLst = lst[x:x+5]
+                    #print(lst[x:x+5])
+                    #print(sortedLst)
                     #print(readHand(rtnLst))
                     return [rtnLst,rank]
     elif rank == 'full house':
@@ -343,8 +362,8 @@ def createRandomHands():
     lst = []
     tempL = []
 
-    for x in range(0,20):
-        for x in range(0,5):
+    for x in range(0,10000):
+        for x in range(0,7):
             tempVal = r.randrange(1,53)
             while tempVal in tempL:
                 tempVal = r.randrange(1,53)
@@ -389,8 +408,9 @@ sum = 0
 for x in handLst:
     #test = f'{readHand(sorted(x,key=getRanking,reverse=True))}: {evaluateHand(x)}'
     #print(readHand(sorted(x,key=getRanking,reverse=True)))
-    #hand = evaluateHand(x)
-    #print(f'{readHand(hand[0]),hand[1]}')
+    hand = evaluateHand(x)
+    print(hand)
+    print(f'{readHand(hand[0]),hand[1]}')
     #print(getHandPoints(hand))
     #sum += getAvg(x)
     continue

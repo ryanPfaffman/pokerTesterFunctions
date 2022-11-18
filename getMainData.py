@@ -169,6 +169,7 @@ def getData(file, dataLst):
                 elif 'Dealer' in st:
                     handMap['Dealer'] = pullHand(st)
                 #print(handMap)
+        #end seat set ups
         if "* F" in x:
             l = len(x)
             floppy = x.strip()
@@ -220,8 +221,6 @@ def getData(file, dataLst):
 
                 print(f'finalHash: {handMap}')
 
-                bestHand = []
-
                 handMap = dict(sorted(handMap.items(),key=lambda y: (y[1][2][0],y[1][2][1]),reverse=True))
 
                 winners = []
@@ -245,6 +244,5 @@ def getData(file, dataLst):
             tableNumber = ''
             communityCards = []
             handMap = {'Big Blind':[],'UTG':[],'UTG+1':[],'UTG+2':[],'Dealer':[],'Small Blind':[]}
-    #end seat set ups
 
 print(getData(directory, handHistory))
