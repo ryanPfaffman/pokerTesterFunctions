@@ -218,45 +218,35 @@ def bestFive(lst, rank):
         leng = len(lst)
         rtnLst = []
         c = 1
-        #print(f'sortedLst: {sortedLst}')
+        print(f'sortedLst: {readHand(sortedLst)}')
         for x in range(0,leng):
-            if x < leng - 1:
-                ch1Crd = deckHash[sortedLst[x]][0]
-                ch2Crd = deckHash[sortedLst[x+1]][0]
-                ch1 = get_key(ch1Crd,handHash)
-                ch2 = get_key(ch2Crd,handHash)
-                '''
-                print(deckHash[sortedLst[x]])
-                print(deckHash[sortedLst[x+1]])
-                print(f'ch1: {ch1}, ch2: {ch2}')
-                print(ch1 - ch2)
-                '''
-                if ch1-ch2 == 1:
-                    c += 1
-                    if len(rtnLst) == 0:
-                        #print(f'1: {sortedLst[x]} 2: {sortedLst[x+1]}')
-                        rtnLst.append(sortedLst[x])
-                        rtnLst.append(sortedLst[x+1])
-                        #print(rtnLst)
-                    else:
-                        rtnLst.append(sortedLst[x+1])
-                    #print(rtnLst)
-                elif ch1-ch2 == 0:
+            if x < leng-1:
+                if deckHash[sortedLst[x]][0] == deckHash[sortedLst[x+1]][0]:
                     continue
                 else:
-                    c = 1
-                if c == 5:
-                    #print('eh')
-                    #print(readHand(rtnLst))
-                    return [rtnLst,'straight']
-        if c == 4:
-            if ch2Crd == '2':
-                if 'A' in readHand(sortedLst):
-                    for x in sortedLst:
-                        if deckHash[x][0] == 'A':
-                            if len(rtnLst) < 5:
-                                rtnLst.append(x)
-        return [rtnLst,'straight']
+                    rtnLst.append(sortedLst[x])
+            else:
+                if deckHash[sortedLst[x]][0] != deckHash[rtnLst[len(rtnLst)-1]][0]:
+                    rtnLst.append(sortedLst[x])
+        #print(rtnLst)
+        sortedLst = rtnLst
+        leng2 = len(sortedLst)
+        print(f'sortedLst now: {readHand(sortedLst)}')
+        for x in range(0,leng2-4):
+            print(x)
+            for y in range(x+4,leng2):
+                yCrd = deckHash[sortedLst[y]][0]
+                xCrd = deckHash[sortedLst[x]][0]
+                valY = get_key(yCrd,handHash)
+                valX = get_key(xCrd,handHash)
+                if c+(valX-valY) == 5:
+                    return [sortedLst[x:y+1],'straight']
+        tempLst = sortedLst[leng2-4:leng2]
+        for x in sortedLst:
+            if deckHash[x][0] == 'A':
+                tempLst.append(x)
+                return [tempLst,'straight']
+
     elif rank == 'three of a kind':
         leng = len(lst)
         rtnLst = []
@@ -315,7 +305,7 @@ def bestFive(lst, rank):
 def evaluateHand(lst):
     isTripsOrBoat1 = isTripsOrBoat(lst)
     isTwoPairOrPair1 = isTwoPairOrPair(lst)
-    print(f'\nfirst:{readHand(lst)}')
+    print(f'\nfirst:{lst}')
     if isQuads(lst):
         return bestFive(lst,'four of a kind')
     elif isFlush(lst):
@@ -362,7 +352,7 @@ def createRandomHands():
     lst = []
     tempL = []
 
-    for x in range(0,10000):
+    for x in range(0,100000):
         for x in range(0,7):
             tempVal = r.randrange(1,53)
             while tempVal in tempL:
@@ -415,8 +405,10 @@ for x in handLst:
     #sum += getAvg(x)
     continue
 
+#print(readHand(evaluateHand([26, 51, 18, 43, 29, 15,32])[0]))
 #testLst = sorted([37,10,34,35,52,26,51],key=getRanking,reverse=True)
 #testHand = evaluateHand([52,43,42,2,28,1,13])
 #print(testHand[0])
 #print(f'{readHand(testHand[0])},{testHand[1]}')
 #print(readHand(evaluateHand(testLst)[0]))
+#print(readHand(evaluateHand([45, 41, 40, 39, 16, 15, 4])[0]))
