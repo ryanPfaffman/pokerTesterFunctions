@@ -392,7 +392,27 @@ def whoWon(hash):
             print(hash[x])
             print(lst[2])
         elif handRank == 2:
-            print()
+            print('2nd2pair')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3]),reverse=True))
+                print(f'tieK2Pard: {tempNary}')
+                firstKey = list(tempNary.keys())[0]
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                chx3 = tempNary[firstKey][2][3]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2 and tempNary[x][2][3] == chx3:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 1:
             print('paird')
             tempNary = {}
@@ -462,7 +482,17 @@ def getHandPoints(lst):
         return [3,keyfst,get_key(snd,handHash),get_key(trd,handHash)]
 
     elif handRank == 'two pair':
+        print('1st2pair')
         print(readHand(handNums))
+        pair1 = deckHash[handNums[0]][0]
+        pair2 = deckHash[handNums[2]][0]
+        kickr = deckHash[handNums[4]][0]
+        keypair1 = get_key(pair1,handHash)
+        keypair2 = get_key(pair2,handHash)
+        keykickr = get_key(kickr,handHash)
+        print([2,keypair1,keypair2,keykickr])
+        return[2,keypair1,keypair2,keykickr]
+
     elif handRank == 'one pair':
         print('paird1st')
         pair = deckHash[handNums[0]][0]
