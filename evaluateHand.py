@@ -270,8 +270,9 @@ def bestFive(lst, rank):
         for x in range(0,leng):
             if x < leng-1:
                 if deckHash[sortedLst[x]][0] == deckHash[sortedLst[x+1]][0]:
-                    rtnLst.append(sortedLst[x])
-                    rtnLst.append(sortedLst[x+1])
+                    if len(rtnLst) != 4:
+                        rtnLst.append(sortedLst[x])
+                        rtnLst.append(sortedLst[x+1])
         for x in sortedLst:
             if len(rtnLst) < 5:
                 if x not in rtnLst:
@@ -338,17 +339,114 @@ def whoWon(hash):
     winners = []
 
     firstKey = list(hash.keys())[0]
+    print(f'\nhashh:{hash}\n')
     chx = hash[firstKey][2]
+    topHandRank = chx[0]
     for x,y in hash.items():
-        if hash[x][2][0] == chx[0] and hash[x][2][1] == chx[1]:
+        lst = hash[x]
+        handNums = lst[0]
+        handRank = lst[2][0]
+        if lst[2][0] == chx[0] and lst[2][1] == chx[1]:
             winners.append(x)
         else:
             break
+
+        if handRank == 8:
+            print()
+        elif handRank == 7:
+            print()
+        elif handRank == 6:
+            print()
+        elif handRank == 5:
+            print()
+        elif handRank == 4:
+            print()
+        elif handRank == 3 and topHandRank == 3:
+            print('this time3')
+            print(f'top: {topHandRank}')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == topHandRank:
+                    tempNary.update({x:hash[x]})
+                print(f'tempNary: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst36 = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3]),reverse=True))
+
+                firstKey = list(tempNary.keys())[0]
+                #print(f'\nhashh:{hash}\n')
+                chx1 = tempNary[firstKey][2][2]
+                chx2 = tempNary[firstKey][2][3]
+                lst32 = []
+                for x, y in tempNary.items():
+                    if tempNary[x][2][2] == chx1 and tempNary[x][2][3] == chx2:
+                        lst32.append(x)
+                    print('\n')
+                    #print(tempNary[x][2][2][0])
+                print(f'tieK: {tempNary}')
+                return lst32
+                print('\n\n')
+            print(f'hashtime: {hash}')
+            print(hash[x])
+            print(lst[2])
+        elif handRank == 2:
+            print()
+        elif handRank == 1:
+            print()
+        else:
+            print()
+
+
 
     return winners
 
 def getHandPoints(lst):
     s = 0
+    print('readHandTimes')
+    print(lst)
+    handNums = lst[0]
+    handRank = lst[1]
+    print('readHandTimes ' + handRank)
+
+    if handRank == 'straight flush':
+        print(readHand(handNums))
+    elif handRank == 'four of a kind':
+        print(readHand(handNums))
+    elif handRank == 'full house':
+        print(readHand(handNums))
+    elif handRank == 'flush':
+        print(readHand(handNums))
+    elif handRank == 'straight':
+        fst = deckHash[handNums[0]][0]
+        snd = deckHash[handNums[4]][0]
+        str = f'straight {snd} to {fst}'
+        #print(str)
+        if snd == 'A':
+            return [4,0]
+        else:
+            #print(get_key(snd,handHash))
+            return [4,get_key(snd,handHash)]
+
+        #print(readHand(handNums))
+    elif handRank == 'three of a kind':
+        fst = deckHash[handNums[0]][0]
+        snd = deckHash[handNums[3]][0]
+        trd = deckHash[handNums[4]][0]
+        str = f'3oak, {fst},{snd},{trd}'
+        print(str)
+        print(readHand(handNums))
+        keyfst = get_key(fst,handHash)
+        return [3,keyfst,get_key(snd,handHash),get_key(trd,handHash)]
+
+    elif handRank == 'two pair':
+        print(readHand(handNums))
+    elif handRank == 'one pair':
+        print(readHand(handNums))
+    else:
+        print(readHand(handNums))
     print(readHand(lst[0]))
     print(lst[1])
     for x in lst[0]:
@@ -421,91 +519,104 @@ for x in handLst:
 #print(f'{readHand(testHand[0])},{testHand[1]}')
 #print(readHand(evaluateHand(testLst)[0]))
 #print(readHand(evaluateHand([45, 41, 40, 39, 16, 15, 4])[0]))
+for x in range(0,1000):
+    print(f'\t\t\tNEW HAND\n\n\n\n\n')
+    shuffleDeckHash = {52:['A','h'],51:['K','h'],50:['Q','h'],49:['J','h'],48:['T','h'],47:['9','h'],46:['8','h'],45:['7','h'],44:['6','h'],43:['5','h'],42:['4','h'],41:['3','h'],40:['2','h'],39:['A','d'],38:['K','d'],37:['Q','d'],36:['J','d'],35:['T','d'],34:['9','d'],33:['8','d'],32:['7','d'],31:['6','d'],30:['5','d'],29:['4','d'],28:['3','d'],27:['2','d'],26:['A','c'],25:['K','c'],24:['Q','c'],23:['J','c'],22:['T','c'],21:['9','c'],20:['8','c'],19:['7','c'],18:['6','c'],17:['5','c'],16:['4','c'],15:['3','c'],14:['2','c'],13:['A','s'],12:['K','s'],11:['Q','s'],10:['J','s'],9:['T','s'],8:['9','s'],7:['8','s'],6:['7','s'],5:['6','s'],4:['5','s'],3:['4','s'],2:['3','s'],1:['2','s']}
+    shuffledKeys =  list(deckHash.keys())
+    r.shuffle(shuffledKeys)
+    print(f'shuffledDeckKeys: {shuffledKeys}')
+    ind = 0
+    ind2 = 0
+    cardsNeededPre = 12
+    handMapTest = {'Big Blind':[],'UTG':[],'UTG+1':[],'UTG+2':[],'Dealer':[],'Small Blind':[]}
+    #print(list(handMapTest.keys())[0])
+    handMapTestLst = list(handMapTest.keys())
+    handMapTestLstLen = len(handMapTestLst)
+    communityCardsTest = []
+    print(f'handMapTestLstLen: {handMapTestLstLen}')
+    sec = False
+    tempLst7 = []
 
-shuffledKeys =  list(deckHash.keys())
-r.shuffle(shuffledKeys)
-print(f'shuffledDeckKeys: {shuffledKeys}')
-ind = 0
-ind2 = 0
-cardsNeededPre = 12
-handMapTest = {'Big Blind':[],'UTG':[],'UTG+1':[],'UTG+2':[],'Dealer':[],'Small Blind':[]}
-#print(list(handMapTest.keys())[0])
-handMapTestLst = list(handMapTest.keys())
-handMapTestLstLen = len(handMapTestLst)
-communityCardsTest = []
-print(f'handMapTestLstLen: {handMapTestLstLen}')
-sec = False
-tempLst7 = []
+    for x in shuffledKeys:
+        if ind < cardsNeededPre:
+            print(x)
+            print(f'ind2: {ind2}')
+            #print(handMapTest[handMapTestLst[ind2]])
+            print(deckHash[x])
+            curSeat = handMapTestLst[ind2]
+            curCard = deckHash[x]
+            print(f'cur: {curSeat}')
+            print(f'curCard: {curCard}')
+            if sec:
+                tempLst7 = handMapTest[curSeat]
+                #print(f'te: {tempLst10}')
+                tempLst7.append(x)
+                handMapTest[curSeat] = tempLst7
+                tempLst7 = []
+                #print(f'curCard: {tempLst10+curCard}')
+                #tempLst10.append(curCard[1])
+                #print(f'te: {tempLst10}')
+                #handMapTest[curSeat] = tempLst10
 
-for x in shuffledKeys:
-    if ind < cardsNeededPre:
-        print(x)
-        print(f'ind2: {ind2}')
-        #print(handMapTest[handMapTestLst[ind2]])
-        print(deckHash[x])
-        curSeat = handMapTestLst[ind2]
-        curCard = deckHash[x]
-        print(f'cur: {curSeat}')
-        print(f'curCard: {curCard}')
-        if sec:
-            tempLst7 = handMapTest[curSeat]
-            #print(f'te: {tempLst10}')
-            tempLst7.append(x)
-            handMapTest[curSeat] = tempLst7
-            tempLst7 = []
-            #print(f'curCard: {tempLst10+curCard}')
-            #tempLst10.append(curCard[1])
-            #print(f'te: {tempLst10}')
-            #handMapTest[curSeat] = tempLst10
-
+            else:
+                tempLst7.append(x)
+                handMapTest[curSeat] = tempLst7
+                tempLst7 = []
+            #print(handMapTest)
+            if ind2 == handMapTestLstLen-1:
+                sec = True
+                ind2 = 0
+            else:
+                ind2 += 1
+            #print(f'{shuffleDeckHash[x]}')
+            del shuffleDeckHash[x]
         else:
-            tempLst7.append(x)
-            handMapTest[curSeat] = tempLst7
-            tempLst7 = []
-        #print(handMapTest)
-        if ind2 == handMapTestLstLen-1:
-            sec = True
-            ind2 = 0
-        else:
-            ind2 += 1
-        #print(f'{shuffleDeckHash[x]}')
-        del shuffleDeckHash[x]
-    else:
-        break
+            break
 
-    ind += 1
+        ind += 1
 
-print(f'shuffledDeckKeys: {len(shuffledKeys)}')
-lstAfterPreDeal = shuffledKeys[ind:]
-print(f'len lstAfterPreDeal: {len(lstAfterPreDeal)}')
-print(f'ind: {shuffledKeys[ind:]}')
-print(f'handMapTest after: {handMapTest}')
-print(f'shuffleDeckHash after: {shuffleDeckHash}')
-communityCardsTest.extend(lstAfterPreDeal[1:4])
-communityCardsTest.append(lstAfterPreDeal[4])
-communityCardsTest.append(lstAfterPreDeal[6])
-print(f'flop: {communityCardsTest[:3]}')
-print(f'turn: {communityCardsTest[3]}')
-print(f'river: {communityCardsTest[4]}')
-print(f'board: {readHand(communityCardsTest)}')
-for x,y in handMapTest.items():
-    handMapTest[x].extend(communityCardsTest)
-    print(readHand(handMapTest[x]))
-for x,y in handMapTest.items():
-    handEval = evaluateHand(handMapTest[x])
-    print(f'{x}:{readHand(handMapTest[x])}')
-    handMapTest[x] = handEval
-    handPoints = getHandPoints(handMapTest[x])
-    handMapTest[x].append(handPoints)
-    print(handMapTest[x])
-    print(readHand(handMapTest[x][0]))
-
-print(f'new handMapTest: {handMapTest}')
-handMapStr = sortByStrength(handMapTest)
-print(f'handMapStr: {handMapStr}')
-winnersLst = whoWon(handMapStr)
-for x in winnersLst:
-    print(x)
-    print(handMapTest[x])
+    print(f'shuffledDeckKeys: {len(shuffledKeys)}')
+    lstAfterPreDeal = shuffledKeys[ind:]
+    print(f'len lstAfterPreDeal: {len(lstAfterPreDeal)}')
+    print(f'ind: {shuffledKeys[ind:]}')
+    print(f'handMapTest after: {handMapTest}')
+    print(f'shuffleDeckHash after: {shuffleDeckHash}')
+    communityCardsTest.extend(lstAfterPreDeal[1:4])
+    communityCardsTest.append(lstAfterPreDeal[4])
+    communityCardsTest.append(lstAfterPreDeal[6])
+    print(f'flop: {communityCardsTest[:3]}')
+    print(f'turn: {communityCardsTest[3]}')
+    print(f'river: {communityCardsTest[4]}')
     print(f'board: {readHand(communityCardsTest)}')
-    print(readHand(handMapTest[x][0]))
+    for x,y in handMapTest.items():
+        handMapTest[x].extend(communityCardsTest)
+        print(readHand(handMapTest[x]))
+    for x,y in handMapTest.items():
+        handEval = evaluateHand(handMapTest[x])
+        print(f'{x}:{readHand(handMapTest[x])}')
+        handMapTest[x] = handEval
+        handPoints = getHandPoints(handMapTest[x])
+        handMapTest[x].append(handPoints)
+        print(handMapTest[x])
+        print(readHand(handMapTest[x][0]))
+
+    print(f'new handMapTest: {handMapTest}')
+    handMapStr = sortByStrength(handMapTest)
+    print()
+    print(f'handMapStr: {handMapStr}')
+    winnersLst = whoWon(handMapStr)
+    if len(winnersLst) > 1:
+        for x in winnersLst:
+            print(f'\t\t\tNEW TIE HAND\n\n\n\n\n')
+            print(x)
+            print(handMapTest[x])
+            print(f'board: {readHand(communityCardsTest)}')
+            print(readHand(handMapTest[x][0]))
+            print()
+    else:
+        print(f'\t\t\tNEW WINNER3s\n\n\n\n\n')
+        print(x)
+        print(handMapTest[x])
+        print(f'board: {readHand(communityCardsTest)}')
+        print(readHand(handMapTest[x][0]))
+        print()
