@@ -355,7 +355,27 @@ def whoWon(hash):
         elif handRank == 7:
             print()
         elif handRank == 6:
-            print()
+            print('boats2')
+            print(f'top: {handRank}')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+                print(f'tempNary: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2]),reverse=True))
+                firstKey = list(tempNary.keys())[0]
+                #print(f'\nhashh:{hash}\n')
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 5:
             print()
         elif handRank == 4:
@@ -457,6 +477,14 @@ def getHandPoints(lst):
         print(readHand(handNums))
     elif handRank == 'full house':
         print(readHand(handNums))
+        print('boats1')
+        print(readHand(handNums))
+        topboat = deckHash[handNums[0]][0]
+        bottomboat = deckHash[handNums[3]][0]
+        keytopboat = get_key(topboat,handHash)
+        keybottomboat = get_key(bottomboat,handHash)
+        print([6,keytopboat,keybottomboat])
+        return [6,keytopboat,keybottomboat]
     elif handRank == 'flush':
         print(readHand(handNums))
     elif handRank == 'straight':
