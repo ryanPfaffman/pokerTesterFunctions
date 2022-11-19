@@ -4,6 +4,7 @@ from getMainData import *
 handHash = {13:"A",12:"K",11:"Q",10:"J",9:"T",8:"9",7:"8",6:"7",5:"6",4:"5",3:"4",2:"3",1:"2"}
 handRankingHash = {8:"straight flush",7:"four of a kind",6:'full house',5:'flush',4:'straight',3:'three of a kind',2:'two pair',1:'one pair', 0:'high card'}
 deckHash = {52:['A','h'],51:['K','h'],50:['Q','h'],49:['J','h'],48:['T','h'],47:['9','h'],46:['8','h'],45:['7','h'],44:['6','h'],43:['5','h'],42:['4','h'],41:['3','h'],40:['2','h'],39:['A','d'],38:['K','d'],37:['Q','d'],36:['J','d'],35:['T','d'],34:['9','d'],33:['8','d'],32:['7','d'],31:['6','d'],30:['5','d'],29:['4','d'],28:['3','d'],27:['2','d'],26:['A','c'],25:['K','c'],24:['Q','c'],23:['J','c'],22:['T','c'],21:['9','c'],20:['8','c'],19:['7','c'],18:['6','c'],17:['5','c'],16:['4','c'],15:['3','c'],14:['2','c'],13:['A','s'],12:['K','s'],11:['Q','s'],10:['J','s'],9:['T','s'],8:['9','s'],7:['8','s'],6:['7','s'],5:['6','s'],4:['5','s'],3:['4','s'],2:['3','s'],1:['2','s']}
+shuffleDeckHash = {52:['A','h'],51:['K','h'],50:['Q','h'],49:['J','h'],48:['T','h'],47:['9','h'],46:['8','h'],45:['7','h'],44:['6','h'],43:['5','h'],42:['4','h'],41:['3','h'],40:['2','h'],39:['A','d'],38:['K','d'],37:['Q','d'],36:['J','d'],35:['T','d'],34:['9','d'],33:['8','d'],32:['7','d'],31:['6','d'],30:['5','d'],29:['4','d'],28:['3','d'],27:['2','d'],26:['A','c'],25:['K','c'],24:['Q','c'],23:['J','c'],22:['T','c'],21:['9','c'],20:['8','c'],19:['7','c'],18:['6','c'],17:['5','c'],16:['4','c'],15:['3','c'],14:['2','c'],13:['A','s'],12:['K','s'],11:['Q','s'],10:['J','s'],9:['T','s'],8:['9','s'],7:['8','s'],6:['7','s'],5:['6','s'],4:['5','s'],3:['4','s'],2:['3','s'],1:['2','s']}
 
 def isQuads(lst):
     str = ''
@@ -306,6 +307,7 @@ def evaluateHand(lst):
     isTripsOrBoat1 = isTripsOrBoat(lst)
     isTwoPairOrPair1 = isTwoPairOrPair(lst)
     print(f'\nfirst:{lst}')
+    print(f'\nfirst read:{readHand(lst)}')
     if isQuads(lst):
         return bestFive(lst,'four of a kind')
     elif isFlush(lst):
@@ -316,7 +318,7 @@ def evaluateHand(lst):
     elif isStraight(lst):
         return bestFive(lst,'straight')
     elif isTripsOrBoat1 != 'false':
-        print(isTripsOrBoat1)
+        #print(isTripsOrBoat1)
         if isTripsOrBoat1 == '3ok':
             return bestFive(lst,'three of a kind')
         else:
@@ -352,7 +354,7 @@ def createRandomHands():
     lst = []
     tempL = []
 
-    for x in range(0,100000):
+    for x in range(0,10):
         for x in range(0,7):
             tempVal = r.randrange(1,53)
             while tempVal in tempL:
@@ -398,9 +400,9 @@ sum = 0
 for x in handLst:
     #test = f'{readHand(sorted(x,key=getRanking,reverse=True))}: {evaluateHand(x)}'
     #print(readHand(sorted(x,key=getRanking,reverse=True)))
-    hand = evaluateHand(x)
-    print(hand)
-    print(f'{readHand(hand[0]),hand[1]}')
+    #hand = evaluateHand(x)
+    #print(hand)
+    #print(f'{readHand(hand[0]),hand[1]}')
     #print(getHandPoints(hand))
     #sum += getAvg(x)
     continue
@@ -412,3 +414,63 @@ for x in handLst:
 #print(f'{readHand(testHand[0])},{testHand[1]}')
 #print(readHand(evaluateHand(testLst)[0]))
 #print(readHand(evaluateHand([45, 41, 40, 39, 16, 15, 4])[0]))
+'''
+shuffledKeys =  list(deckHash.keys())
+r.shuffle(shuffledKeys)
+print(f'shuffledDeckKeys: {shuffledKeys}')
+ind = 0
+ind2 = 0
+cardsNeededPre = 12
+handMapTest = {'Big Blind':[],'UTG':[],'UTG+1':[],'UTG+2':[],'Dealer':[],'Small Blind':[]}
+#print(list(handMapTest.keys())[0])
+handMapTestLst = list(handMapTest.keys())
+handMapTestLstLen = len(handMapTestLst)
+print(f'handMapTestLstLen: {handMapTestLstLen}')
+sec = False
+tempLst7 = []
+
+for x in shuffledKeys:
+    if ind < cardsNeededPre:
+        print(x)
+        print(f'ind2: {ind2}')
+        #print(handMapTest[handMapTestLst[ind2]])
+        print(deckHash[x])
+        curSeat = handMapTestLst[ind2]
+        curCard = deckHash[x]
+        print(f'cur: {curSeat}')
+        print(f'curCard: {curCard}')
+        if sec:
+            tempLst7 = handMapTest[curSeat]
+            #print(f'te: {tempLst10}')
+            tempLst7.append(x)
+            handMapTest[curSeat] = tempLst7
+            tempLst7 = []
+            #print(f'curCard: {tempLst10+curCard}')
+            #tempLst10.append(curCard[1])
+            #print(f'te: {tempLst10}')
+            #handMapTest[curSeat] = tempLst10
+
+        else:
+            tempLst7.append(x)
+            handMapTest[curSeat] = tempLst7
+            tempLst7 = []
+        #print(handMapTest)
+        if ind2 == handMapTestLstLen-1:
+            sec = True
+            ind2 = 0
+        else:
+            ind2 += 1
+        #print(f'{shuffleDeckHash[x]}')
+        del shuffleDeckHash[x]
+    else:
+        break
+
+    ind += 1
+
+print(f'shuffledDeckKeys: {len(shuffledKeys)}')
+lstAfterPreDeal = shuffledKeys[ind:]
+print(f'len lstAfterPreDeal: {len(lstAfterPreDeal)}')
+print(f'ind: {shuffledKeys[ind:]}')
+print(f'handMapTest after: {handMapTest}')
+print(f'shuffleDeckHash after: {shuffleDeckHash}')
+'''
