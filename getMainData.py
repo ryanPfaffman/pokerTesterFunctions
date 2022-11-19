@@ -222,7 +222,7 @@ def getData(file, dataLst):
                 print(f'finalHash: {handMap}')
 
                 handMap = dict(sorted(handMap.items(),key=lambda y: (y[1][2][0],y[1][2][1]),reverse=True))
-
+                print(handMap)
                 winners = []
 
                 firstKey = list(handMap.keys())[0]

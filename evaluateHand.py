@@ -1,5 +1,4 @@
 import random as r
-from getMainData import *
 
 handHash = {13:"A",12:"K",11:"Q",10:"J",9:"T",8:"9",7:"8",6:"7",5:"6",4:"5",3:"4",2:"3",1:"2"}
 handRankingHash = {8:"straight flush",7:"four of a kind",6:'full house',5:'flush',4:'straight',3:'three of a kind',2:'two pair',1:'one pair', 0:'high card'}
@@ -331,14 +330,22 @@ def evaluateHand(lst):
     else:
         return bestFive(lst,'high card')
 
-def whoWon(lst):
-    rtnHash = {}
-    i = 0
-    for x in lst:
-        for card in x:
-            print(deckHash[card][1])
+def sortByStrength(hash):
+    hash = dict(sorted(hash.items(),key=lambda y: (y[1][2][0],y[1][2][1]),reverse=True))
+    return hash
 
-    return rtnHash
+def whoWon(hash):
+    winners = []
+
+    firstKey = list(hash.keys())[0]
+    chx = hash[firstKey][2]
+    for x,y in hash.items():
+        if hash[x][2][0] == chx[0] and hash[x][2][1] == chx[1]:
+            winners.append(x)
+        else:
+            break
+
+    return winners
 
 def getHandPoints(lst):
     s = 0
@@ -414,7 +421,7 @@ for x in handLst:
 #print(f'{readHand(testHand[0])},{testHand[1]}')
 #print(readHand(evaluateHand(testLst)[0]))
 #print(readHand(evaluateHand([45, 41, 40, 39, 16, 15, 4])[0]))
-'''
+
 shuffledKeys =  list(deckHash.keys())
 r.shuffle(shuffledKeys)
 print(f'shuffledDeckKeys: {shuffledKeys}')
@@ -425,6 +432,7 @@ handMapTest = {'Big Blind':[],'UTG':[],'UTG+1':[],'UTG+2':[],'Dealer':[],'Small 
 #print(list(handMapTest.keys())[0])
 handMapTestLst = list(handMapTest.keys())
 handMapTestLstLen = len(handMapTestLst)
+communityCardsTest = []
 print(f'handMapTestLstLen: {handMapTestLstLen}')
 sec = False
 tempLst7 = []
@@ -473,4 +481,31 @@ print(f'len lstAfterPreDeal: {len(lstAfterPreDeal)}')
 print(f'ind: {shuffledKeys[ind:]}')
 print(f'handMapTest after: {handMapTest}')
 print(f'shuffleDeckHash after: {shuffleDeckHash}')
-'''
+communityCardsTest.extend(lstAfterPreDeal[1:4])
+communityCardsTest.append(lstAfterPreDeal[4])
+communityCardsTest.append(lstAfterPreDeal[6])
+print(f'flop: {communityCardsTest[:3]}')
+print(f'turn: {communityCardsTest[3]}')
+print(f'river: {communityCardsTest[4]}')
+print(f'board: {readHand(communityCardsTest)}')
+for x,y in handMapTest.items():
+    handMapTest[x].extend(communityCardsTest)
+    print(readHand(handMapTest[x]))
+for x,y in handMapTest.items():
+    handEval = evaluateHand(handMapTest[x])
+    print(f'{x}:{readHand(handMapTest[x])}')
+    handMapTest[x] = handEval
+    handPoints = getHandPoints(handMapTest[x])
+    handMapTest[x].append(handPoints)
+    print(handMapTest[x])
+    print(readHand(handMapTest[x][0]))
+
+print(f'new handMapTest: {handMapTest}')
+handMapStr = sortByStrength(handMapTest)
+print(f'handMapStr: {handMapStr}')
+winnersLst = whoWon(handMapStr)
+for x in winnersLst:
+    print(x)
+    print(handMapTest[x])
+    print(f'board: {readHand(communityCardsTest)}')
+    print(readHand(handMapTest[x][0]))
