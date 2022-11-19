@@ -341,7 +341,6 @@ def whoWon(hash):
     firstKey = list(hash.keys())[0]
     print(f'\nhashh:{hash}\n')
     chx = hash[firstKey][2]
-    topHandRank = chx[0]
     for x,y in hash.items():
         lst = hash[x]
         handNums = lst[0]
@@ -361,12 +360,12 @@ def whoWon(hash):
             print()
         elif handRank == 4:
             print()
-        elif handRank == 3 and topHandRank == 3:
+        elif handRank == 3:
             print('this time3')
-            print(f'top: {topHandRank}')
+            print(f'top: {handRank}')
             tempNary = {}
             for x,y in hash.items():
-                if hash[x][2][0] == topHandRank:
+                if hash[x][2][0] == handRank:
                     tempNary.update({x:hash[x]})
                 print(f'tempNary: {tempNary}')
             if len(tempNary) == 1:
@@ -395,7 +394,28 @@ def whoWon(hash):
         elif handRank == 2:
             print()
         elif handRank == 1:
-            print()
+            print('paird')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3],y[1][2][4]),reverse=True))
+                print(f'tieKPard: {tempNary}')
+                firstKey = list(tempNary.keys())[0]
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                chx3 = tempNary[firstKey][2][3]
+                chx4 = tempNary[firstKey][2][4]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2 and tempNary[x][2][3] == chx3 and tempNary[x][2][4] == chx4:
+                        tempLst.append(x)
+                return tempLst
         else:
             print()
 
@@ -444,7 +464,19 @@ def getHandPoints(lst):
     elif handRank == 'two pair':
         print(readHand(handNums))
     elif handRank == 'one pair':
+        print('paird1st')
+        pair = deckHash[handNums[0]][0]
+        kickr1 = deckHash[handNums[2]][0]
+        kickr2 = deckHash[handNums[3]][0]
+        kickr3 = deckHash[handNums[4]][0]
+        keypair = get_key(pair,handHash)
+        keykickr1 = get_key(kickr1,handHash)
+        keykickr2 = get_key(kickr2,handHash)
+        keykickr3 = get_key(kickr3,handHash)
         print(readHand(handNums))
+        print([1,keypair,keykickr1,keykickr2,keykickr3])
+        return [1,keypair,keykickr1,keykickr2,keykickr3]
+
     else:
         print(readHand(handNums))
     print(readHand(lst[0]))
@@ -614,9 +646,10 @@ for x in range(0,1000):
             print(readHand(handMapTest[x][0]))
             print()
     else:
-        print(f'\t\t\tNEW WINNER3s\n\n\n\n\n')
-        print(x)
-        print(handMapTest[x])
-        print(f'board: {readHand(communityCardsTest)}')
-        print(readHand(handMapTest[x][0]))
-        print()
+        for x in winnersLst:
+            print(f'\t\t\tNEW WINNER3s\n\n\n\n\n')
+            print(x)
+            print(handMapTest[x])
+            print(f'board: {readHand(communityCardsTest)}')
+            print(readHand(handMapTest[x][0]))
+            print()
