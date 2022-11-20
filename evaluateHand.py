@@ -336,8 +336,6 @@ def sortByStrength(hash):
     return hash
 
 def whoWon(hash):
-    winners = []
-
     firstKey = list(hash.keys())[0]
     print(f'\nhashh:{hash}\n')
     chx = hash[firstKey][2]
@@ -345,15 +343,51 @@ def whoWon(hash):
         lst = hash[x]
         handNums = lst[0]
         handRank = lst[2][0]
-        if lst[2][0] == chx[0] and lst[2][1] == chx[1]:
-            winners.append(x)
-        else:
-            break
 
         if handRank == 8:
-            print()
+            print('strflush2')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3],y[1][2][4],y[1][2][5]),reverse=True))
+                print(f'tieK2Pard: {tempNary}')
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                chx3 = tempNary[firstKey][2][3]
+                chx4 = tempNary[firstKey][2][4]
+                chx5 = tempNary[firstKey][2][5]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2 and tempNary[x][2][3] == chx3 and tempNary[x][2][4] == chx4 and tempNary[x][2][5] == chx5:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 7:
-            print()
+            print('quads2')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2]),reverse=True))
+                print(f'tieK2Quads: {tempNary}')
+                firstKey = list(tempNary.keys())[0]
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 6:
             print('boats2')
             print(f'top: {handRank}')
@@ -377,9 +411,47 @@ def whoWon(hash):
                         tempLst.append(x)
                 return tempLst
         elif handRank == 5:
-            print()
+            print('flush2')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3],y[1][2][4],y[1][2][5]),reverse=True))
+                print(f'tieK2Pard: {tempNary}')
+                chx1 = tempNary[firstKey][2][1]
+                chx2 = tempNary[firstKey][2][2]
+                chx3 = tempNary[firstKey][2][3]
+                chx4 = tempNary[firstKey][2][4]
+                chx5 = tempNary[firstKey][2][5]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2 and tempNary[x][2][3] == chx3 and tempNary[x][2][4] == chx4 and tempNary[x][2][5] == chx5:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 4:
-            print()
+            print('str2')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            if len(tempNary) == 1:
+                print(list(tempNary.keys()))
+                return list(tempNary.keys())
+            else:
+                tempLst = []
+                tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1]),reverse=True))
+                print(f'tieK2Pard: {tempNary}')
+                chx1 = tempNary[firstKey][2][1]
+                for x, y in tempNary.items():
+                    if tempNary[x][2][1] == chx1:
+                        tempLst.append(x)
+                return tempLst
         elif handRank == 3:
             print('this time3')
             print(f'top: {handRank}')
@@ -457,11 +529,25 @@ def whoWon(hash):
                         tempLst.append(x)
                 return tempLst
         else:
-            print()
-
-
-
-    return winners
+            print('hgh2')
+            tempNary = {}
+            for x,y in hash.items():
+                if hash[x][2][0] == handRank:
+                    tempNary.update({x:hash[x]})
+            print(f'tempNaryPaird: {tempNary}')
+            tempLst = []
+            tempNary = dict(sorted(tempNary.items(),key=lambda y: (y[1][2][0],y[1][2][1],y[1][2][2],y[1][2][3],y[1][2][4],y[1][2][5]),reverse=True))
+            print(f'tieKPard: {tempNary}')
+            firstKey = list(tempNary.keys())[0]
+            chx1 = tempNary[firstKey][2][1]
+            chx2 = tempNary[firstKey][2][2]
+            chx3 = tempNary[firstKey][2][3]
+            chx4 = tempNary[firstKey][2][4]
+            chx5 = tempNary[firstKey][2][5]
+            for x, y in tempNary.items():
+                if tempNary[x][2][1] == chx1 and tempNary[x][2][2] == chx2 and tempNary[x][2][3] == chx3 and tempNary[x][2][4] == chx4 and tempNary[x][2][5] == chx5:
+                    tempLst.append(x)
+            return tempLst
 
 def getHandPoints(lst):
     s = 0
@@ -472,9 +558,29 @@ def getHandPoints(lst):
     print('readHandTimes ' + handRank)
 
     if handRank == 'straight flush':
+        print('strflush1')
+        crd1 = deckHash[handNums[0]][0]
+        crd2 = deckHash[handNums[1]][0]
+        crd3 = deckHash[handNums[2]][0]
+        crd4 = deckHash[handNums[3]][0]
+        crd5 = deckHash[handNums[4]][0]
+        keycrd1 = get_key(crd1,handHash)
+        keycrd2 = get_key(crd2,handHash)
+        keycrd3 = get_key(crd3,handHash)
+        keycrd4 = get_key(crd4,handHash)
+        keycrd5 = get_key(crd5,handHash)
         print(readHand(handNums))
+        print([8,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5])
+        return [8,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5]
     elif handRank == 'four of a kind':
+        print('quads1')
+        quadsCrd = deckHash[handNums[0]][0]
+        kckr = deckHash[handNums[4]][0]
+        keycrd1 = get_key(quadsCrd,handHash)
+        keycrd2 = get_key(kckr,handHash)
         print(readHand(handNums))
+        print([7,keycrd1,keycrd2])
+        return [7,keycrd1,keycrd2]
     elif handRank == 'full house':
         print(readHand(handNums))
         print('boats1')
@@ -486,7 +592,20 @@ def getHandPoints(lst):
         print([6,keytopboat,keybottomboat])
         return [6,keytopboat,keybottomboat]
     elif handRank == 'flush':
+        print('flush1')
+        crd1 = deckHash[handNums[0]][0]
+        crd2 = deckHash[handNums[1]][0]
+        crd3 = deckHash[handNums[2]][0]
+        crd4 = deckHash[handNums[3]][0]
+        crd5 = deckHash[handNums[4]][0]
+        keycrd1 = get_key(crd1,handHash)
+        keycrd2 = get_key(crd2,handHash)
+        keycrd3 = get_key(crd3,handHash)
+        keycrd4 = get_key(crd4,handHash)
+        keycrd5 = get_key(crd5,handHash)
         print(readHand(handNums))
+        print([5,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5])
+        return [5,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5]
     elif handRank == 'straight':
         fst = deckHash[handNums[0]][0]
         snd = deckHash[handNums[4]][0]
@@ -536,7 +655,20 @@ def getHandPoints(lst):
         return [1,keypair,keykickr1,keykickr2,keykickr3]
 
     else:
+        print('hgh1')
+        crd1 = deckHash[handNums[0]][0]
+        crd2 = deckHash[handNums[1]][0]
+        crd3 = deckHash[handNums[2]][0]
+        crd4 = deckHash[handNums[3]][0]
+        crd5 = deckHash[handNums[4]][0]
+        keycrd1 = get_key(crd1,handHash)
+        keycrd2 = get_key(crd2,handHash)
+        keycrd3 = get_key(crd3,handHash)
+        keycrd4 = get_key(crd4,handHash)
+        keycrd5 = get_key(crd5,handHash)
         print(readHand(handNums))
+        print([0,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5])
+        return [0,keycrd1,keycrd2,keycrd3,keycrd4,keycrd5]
     print(readHand(lst[0]))
     print(lst[1])
     for x in lst[0]:
