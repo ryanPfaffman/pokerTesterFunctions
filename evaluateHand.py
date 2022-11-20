@@ -167,7 +167,7 @@ def bestFive(lst, rank):
         for x in range(0,leng):
             if x < leng:
                 #print(x)
-                if lst[x] - lst[x+1] == 1 and lst[x+1] - lst[x+2] == 1:
+                if lst[x] - lst[x+1] == 1 and lst[x+1] - lst[x+2] == 1 and lst[x+2] - lst[x+3] == 1:
                     rtnLst = lst[x:x+5]
                     #print(lst[x:x+5])
                     #print(sortedLst)
@@ -734,13 +734,21 @@ for x in handLst:
     #sum += getAvg(x)
     continue
 
-#print(readHand(evaluateHand([26, 51, 18, 43, 29, 15,32])[0]))
+#steps to evaluate hand
+#sort hand list by deckHash
+'''
+strFlsLst = [52, 51, 50, 39, 45, 26, 49]
+strFlsLst = sorted(strFlsLst,key=getRanking,reverse=True)
+handEval = evaluateHand(strFlsLst)
+print(f'handEval: {handEval}')
+print(f'handEvalRead: {readHand(handEval[0])}')
 #testLst = sorted([37,10,34,35,52,26,51],key=getRanking,reverse=True)
 #testHand = evaluateHand([52,43,42,2,28,1,13])
 #print(testHand[0])
 #print(f'{readHand(testHand[0])},{testHand[1]}')
 #print(readHand(evaluateHand(testLst)[0]))
 #print(readHand(evaluateHand([45, 41, 40, 39, 16, 15, 4])[0]))
+'''
 for x in range(0,1000):
     print(f'\t\t\tNEW HAND\n\n\n\n\n')
     shuffleDeckHash = {52:['A','h'],51:['K','h'],50:['Q','h'],49:['J','h'],48:['T','h'],47:['9','h'],46:['8','h'],45:['7','h'],44:['6','h'],43:['5','h'],42:['4','h'],41:['3','h'],40:['2','h'],39:['A','d'],38:['K','d'],37:['Q','d'],36:['J','d'],35:['T','d'],34:['9','d'],33:['8','d'],32:['7','d'],31:['6','d'],30:['5','d'],29:['4','d'],28:['3','d'],27:['2','d'],26:['A','c'],25:['K','c'],24:['Q','c'],23:['J','c'],22:['T','c'],21:['9','c'],20:['8','c'],19:['7','c'],18:['6','c'],17:['5','c'],16:['4','c'],15:['3','c'],14:['2','c'],13:['A','s'],12:['K','s'],11:['Q','s'],10:['J','s'],9:['T','s'],8:['9','s'],7:['8','s'],6:['7','s'],5:['6','s'],4:['5','s'],3:['4','s'],2:['3','s'],1:['2','s']}
@@ -835,6 +843,7 @@ for x in range(0,1000):
             print(f'board: {readHand(communityCardsTest)}')
             print(readHand(handMapTest[x][0]))
             print()
+
     else:
         for x in winnersLst:
             print(f'\t\t\tNEW WINNER3s\n\n\n\n\n')
