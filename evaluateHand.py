@@ -30,6 +30,8 @@ def isFlush(lst):
     return False
 
 def isStraightFlush(lst):
+    lst = sorted(lst,reverse=True)
+    print(lst)
     c = 1
     i = 0
     check = int(lst[i])
@@ -161,6 +163,7 @@ def bestFive(lst, rank):
         return [rtnLst,rank]
     elif rank == 'straight flush':
         leng = len(lst)
+        lst = sorted(lst,reverse=True)
         #print('triggered')
         #print(lst)
         #print(readHand(sortedLst))
@@ -311,7 +314,9 @@ def evaluateHand(lst):
     if isQuads(lst):
         return bestFive(lst,'four of a kind')
     elif isFlush(lst):
+        print(f'isSF:{isStraightFlush(lst)}')
         if isStraightFlush(lst):
+            print('42342')
             return bestFive(lst,'straight flush')
         else:
             return bestFive(lst,'flush')
@@ -720,6 +725,8 @@ def getAvg(lst):
 
 def getRanking(x):
     return get_key(deckHash[x][0], handHash)
+def sortLstByDeckHash(x):
+    return get_key(deckHash[x][0], deckHash)
 def getRankToCheckStraight(x):
     return get_key(deckHash[x][0], handHash)
 sum = 0
@@ -737,11 +744,16 @@ for x in handLst:
 #steps to evaluate hand
 #sort hand list by deckHash
 '''
-strFlsLst = [52, 51, 50, 39, 45, 26, 49]
+strFlsLst = [13, 42, 46, 45, 44, 43, 6]
 strFlsLst = sorted(strFlsLst,key=getRanking,reverse=True)
+strFlsLst2 = [50, 47, 46, 45, 44, 43, 6]
+strFlsLst2 = sorted(strFlsLst2,key=getRanking,reverse=True)
 handEval = evaluateHand(strFlsLst)
+handEval2 = evaluateHand(strFlsLst2)
 print(f'handEval: {handEval}')
 print(f'handEvalRead: {readHand(handEval[0])}')
+print(f'handEval: {handEval2}')
+print(f'handEvalRead: {readHand(handEval2[0])}')
 #testLst = sorted([37,10,34,35,52,26,51],key=getRanking,reverse=True)
 #testHand = evaluateHand([52,43,42,2,28,1,13])
 #print(testHand[0])
@@ -752,7 +764,7 @@ print(f'handEvalRead: {readHand(handEval[0])}')
 for x in range(0,1000):
     print(f'\t\t\tNEW HAND\n\n\n\n\n')
     shuffleDeckHash = {52:['A','h'],51:['K','h'],50:['Q','h'],49:['J','h'],48:['T','h'],47:['9','h'],46:['8','h'],45:['7','h'],44:['6','h'],43:['5','h'],42:['4','h'],41:['3','h'],40:['2','h'],39:['A','d'],38:['K','d'],37:['Q','d'],36:['J','d'],35:['T','d'],34:['9','d'],33:['8','d'],32:['7','d'],31:['6','d'],30:['5','d'],29:['4','d'],28:['3','d'],27:['2','d'],26:['A','c'],25:['K','c'],24:['Q','c'],23:['J','c'],22:['T','c'],21:['9','c'],20:['8','c'],19:['7','c'],18:['6','c'],17:['5','c'],16:['4','c'],15:['3','c'],14:['2','c'],13:['A','s'],12:['K','s'],11:['Q','s'],10:['J','s'],9:['T','s'],8:['9','s'],7:['8','s'],6:['7','s'],5:['6','s'],4:['5','s'],3:['4','s'],2:['3','s'],1:['2','s']}
-    shuffledKeys =  list(deckHash.keys())
+    shuffledKeys =  list(shuffleDeckHash.keys())
     r.shuffle(shuffledKeys)
     print(f'shuffledDeckKeys: {shuffledKeys}')
     ind = 0
