@@ -940,7 +940,7 @@ def getProb(map):
     probmap = {}
     checkstr = ''
     holeCardsMap = {}
-    iters = 100000
+    iters = 5000
     for x in range(0,iters):
         ###print(f'\n\nmap::: {map}\n\n')
         if fstBoard:
